@@ -1,4 +1,5 @@
-# AngularCurrencyConverter
+# Angular_Currency_Converter
+Currency converter written in Angular for learning purposes
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.3.
 
