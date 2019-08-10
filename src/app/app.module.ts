@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {MainComponent} from './components/main/main.component';
+import {SharedModule} from './modules/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -10,9 +11,11 @@ import {MainComponent} from './components/main/main.component';
     MainComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
