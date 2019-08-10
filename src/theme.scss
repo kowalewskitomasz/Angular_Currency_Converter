@@ -1,0 +1,18 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$converter-primary: mat-palette($mat-indigo);
+$converter-accent: mat-palette($mat-pink, A200, A100, A400);
+$converter-warn: mat-palette($mat-red);
+$converter-theme: mat-light-theme($converter-primary, $converter-accent, $converter-warn);
+@include angular-material-theme($converter-theme);
+
+$custom-typography: mat-typography-config(
+  $font-family: 'Nunito',
+  $headline: mat-typography-level(72px, 72px, 300),
+  $body-1: mat-typography-level(16px, 24px, 500) //$button: mat-typography-level(24px, 24px, 300)
+);
+
+@include angular-material-typography($custom-typography);
+@include mat-core($custom-typography);
