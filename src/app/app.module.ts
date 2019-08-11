@@ -7,6 +7,7 @@ import {SharedModule} from './modules/shared.module';
 import {CalculatorComponent} from './components/calculator/calculator.component';
 import {RouterModule} from '@angular/router';
 import {RoutingModule} from './modules/routing.module';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import {RoutingModule} from './modules/routing.module';
     RoutingModule,
     RouterModule,
     RouterModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

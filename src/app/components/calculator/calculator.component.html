@@ -8,22 +8,20 @@
     <div class="col-6 text-center">
       <mat-form-field>
         <mat-label>Choose currency</mat-label>
-        <mat-select [(value)]="selected">
-          <mat-option>None</mat-option>
-          <mat-option value="option1">Option 1</mat-option>
-          <mat-option value="option2">Option 2</mat-option>
-          <mat-option value="option3">Option 3</mat-option>
+        <mat-select>
+          <mat-option *ngFor="let rate of exchangeTable.rates" [value]="rate.currency">
+            {{rate.currency}}
+          </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
     <div class="col-6 text-center">
       <mat-form-field>
         <mat-label>Choose currency</mat-label>
-        <mat-select [(value)]="selected2">
-          <mat-option>None</mat-option>
-          <mat-option value="option1">Option 1</mat-option>
-          <mat-option value="option2">Option 2</mat-option>
-          <mat-option value="option3">Option 3</mat-option>
+        <mat-select>
+          <mat-option *ngFor="let rate of exchangeTable.rates" [value]="rate.currency">
+            {{rate.currency}}
+          </mat-option>
         </mat-select>
       </mat-form-field>
     </div>

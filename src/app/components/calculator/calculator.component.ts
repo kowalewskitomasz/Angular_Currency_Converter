@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {HttpService} from '../../services/http.service';
+import {Exchange} from '../../model/exchange.model';
 
 @Component({
   selector: 'app-calculator',
@@ -6,14 +8,14 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./calculator.component.css']
 })
 export class CalculatorComponent implements OnInit {
-  selected: String = 'option2';
-  selected2: String = 'option2';
+  exchangeTable: Exchange;
 
-  //TODO create http service and start handling currency data from NBP Web API
-  constructor() {
+  constructor(private http: HttpService) {
   }
 
   ngOnInit() {
+    this.http.getCurrencies().subscribe(exchangeNBP => {
+      this.exchangeTable = exchangeNBP[0];
+    });
   }
-
 }
