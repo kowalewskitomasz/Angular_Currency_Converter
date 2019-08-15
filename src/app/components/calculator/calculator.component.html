@@ -8,27 +8,27 @@
     <div class="col-6 text-center d-flex flex-column">
       <mat-form-field>
         <mat-label>Choose currency</mat-label>
-        <mat-select>
+        <mat-select [(value)]="rateFirstCurrency" (selectionChange)="updateValuesLeft()">
           <mat-option *ngFor="let rate of rateTable" [value]="rate.mid">
             {{rate.code + ' - ' + rate.currency}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="example-full-width">
-        <input matInput placeholder="Value" [value]="valueFirstCurrency">
+        <input matInput placeholder="Value" type="number" [(ngModel)]="valueFirstCurrency" (keyup)="onLeftCurrencyKey($event)">
       </mat-form-field>
     </div>
     <div class="col-6 text-center d-flex flex-column">
       <mat-form-field>
         <mat-label>Choose currency</mat-label>
-        <mat-select>
+        <mat-select [(value)]="rateSecondCurrency" (selectionChange)="updateValuesRight()">
           <mat-option *ngFor="let rate of rateTable" [value]="rate.mid">
             {{rate.code + ' - ' + rate.currency}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="example-full-width">
-        <input matInput placeholder="Value" [value]="valueSecondCurrency">
+        <input matInput placeholder="Value" type="number" [(ngModel)]="valueSecondCurrency" (keyup)="onRightCurrencyKey($event)">
       </mat-form-field>
     </div>
   </div>

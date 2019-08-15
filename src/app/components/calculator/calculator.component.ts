@@ -11,8 +11,10 @@ import {Rate} from '../../model/rate.model';
 export class CalculatorComponent implements OnInit {
   exchangeTable: Exchange;
   rateTable: Rate[];
-  valueFirstCurrency: String = '';
-  valueSecondCurrency: String = '';
+  valueFirstCurrency: Number = 100;
+  valueSecondCurrency: Number;
+  rateFirstCurrency: Number;
+  rateSecondCurrency: Number;
 
   constructor(private http: HttpService) {
   }
@@ -21,6 +23,25 @@ export class CalculatorComponent implements OnInit {
     this.http.getCurrencies().subscribe(exchangeNBP => {
       this.exchangeTable = exchangeNBP[0];
       this.rateTable = this.exchangeTable.rates;
+      this.rateFirstCurrency = this.rateTable[0].mid;
+      this.rateSecondCurrency = this.rateTable[1].mid;
+      this.updateValuesLeft();
     });
+  }
+
+  updateValuesLeft() {
+    this.valueSecondCurrency = ((+this.valueFirstCurrency * this.rateFirstCurrency.valueOf()) / this.rateSecondCurrency.valueOf());
+  }
+
+  updateValuesRight() {
+    this.valueFirstCurrency = ((+this.valueSecondCurrency * this.rateSecondCurrency.valueOf()) / this.rateFirstCurrency.valueOf());
+  }
+
+  onLeftCurrencyKey($event: KeyboardEvent) {
+    this.updateValuesLeft();
+  }
+
+  onRightCurrencyKey($event: KeyboardEvent) {
+    this.updateValuesRight();
   }
 }

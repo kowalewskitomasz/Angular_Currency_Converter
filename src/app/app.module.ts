@@ -8,6 +8,7 @@ import {CalculatorComponent} from './components/calculator/calculator.component'
 import {RouterModule} from '@angular/router';
 import {RoutingModule} from './modules/routing.module';
 import {HttpClientModule} from '@angular/common/http';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {HttpClientModule} from '@angular/common/http';
     RoutingModule,
     RouterModule,
     RouterModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
