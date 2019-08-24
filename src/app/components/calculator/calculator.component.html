@@ -5,7 +5,8 @@
     </div>
   </div>
   <div class="row input-row">
-    <div class="col-6 text-center d-flex flex-column">
+    <div class="col-2"></div>
+    <div class="col-3 text-center d-flex flex-column">
       <mat-form-field>
         <mat-label>Choose currency</mat-label>
         <mat-select [(value)]="rateFirstCurrency" (selectionChange)="updateValuesLeft()">
@@ -14,11 +15,16 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Value" type="number" [(ngModel)]="valueFirstCurrency" (keyup)="onLeftCurrencyKey($event)">
+      <mat-form-field>
+        <input matInput placeholder="Value" type="number" [(ngModel)]="valueFirstCurrency" (keyup)="updateValuesLeft()">
       </mat-form-field>
     </div>
-    <div class="col-6 text-center d-flex flex-column">
+    <div class="col-2 text-center">
+      <button mat-icon-button (click)="switchCurrencies()">
+        <mat-icon>compare_arrows</mat-icon>
+      </button>
+    </div>
+    <div class="col-3 text-center d-flex flex-column">
       <mat-form-field>
         <mat-label>Choose currency</mat-label>
         <mat-select [(value)]="rateSecondCurrency" (selectionChange)="updateValuesRight()">
@@ -27,10 +33,12 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Value" type="number" [(ngModel)]="valueSecondCurrency" (keyup)="onRightCurrencyKey($event)">
+      <mat-form-field>
+        <input matInput placeholder="Value" type="number" [(ngModel)]="valueSecondCurrency" (keyup)="updateValuesRight()">
       </mat-form-field>
     </div>
+    <div class="col-2"></div>
+
   </div>
   <div class="row graph-row">Tutaj wykres</div>
   <div class="row">Tutaj rozne okresy czasu</div>

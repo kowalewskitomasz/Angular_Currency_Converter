@@ -37,11 +37,10 @@ export class CalculatorComponent implements OnInit {
     this.valueFirstCurrency = ((+this.valueSecondCurrency * this.rateSecondCurrency.valueOf()) / this.rateFirstCurrency.valueOf());
   }
 
-  onLeftCurrencyKey($event: KeyboardEvent) {
+  switchCurrencies() {
+    const tempRateFirstCurrency = this.rateFirstCurrency;
+    this.rateFirstCurrency = this.rateSecondCurrency;
+    this.rateSecondCurrency = tempRateFirstCurrency;
     this.updateValuesLeft();
-  }
-
-  onRightCurrencyKey($event: KeyboardEvent) {
-    this.updateValuesRight();
   }
 }
