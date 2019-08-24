@@ -9,8 +9,8 @@
     <div class="col-3 text-center d-flex flex-column">
       <mat-form-field>
         <mat-label>Choose currency</mat-label>
-        <mat-select [(value)]="rateFirstCurrency" (selectionChange)="updateValuesLeft()">
-          <mat-option *ngFor="let rate of rateTable" [value]="rate.mid">
+        <mat-select [(value)]="firstCurrency" (selectionChange)="updateValuesLeft()">
+          <mat-option *ngFor="let rate of rateTable" [value]="rate">
             {{rate.code + ' - ' + rate.currency}}
           </mat-option>
         </mat-select>
@@ -27,8 +27,8 @@
     <div class="col-3 text-center d-flex flex-column">
       <mat-form-field>
         <mat-label>Choose currency</mat-label>
-        <mat-select [(value)]="rateSecondCurrency" (selectionChange)="updateValuesRight()">
-          <mat-option *ngFor="let rate of rateTable" [value]="rate.mid">
+        <mat-select [(value)]="secondCurrency" (selectionChange)="updateValuesRight()">
+          <mat-option *ngFor="let rate of rateTable" [value]="rate">
             {{rate.code + ' - ' + rate.currency}}
           </mat-option>
         </mat-select>
@@ -40,10 +40,28 @@
     <div class="col-2"></div>
 
   </div>
-  <div class="row graph-row">Tutaj wykres</div>
-  <div class="row">Tutaj rozne okresy czasu</div>
+  <div class="row graph-row">
+    <canvas baseChart
+            [datasets]="chartConfig.getLineChartData"
+            [labels]="chartConfig.getLineChartLabels"
+            [options]="chartConfig.getLineChartOptions"
+            [legend]="true"
+            [chartType]="'line'">
+    </canvas>
+  </div>
+  <div class="row timespan-row">
+    <div class="col text-center">
+      <button mat-raised-button color="accent" (click)="updateChart(Period.WEEK)">1 week</button>
+      <button mat-raised-button color="accent" (click)="updateChart(Period.MONTH)">1 month</button>
+      <button mat-raised-button color="accent" (click)="updateChart(Period.MONTH3)">3 months</button>
+      <button mat-raised-button color="accent" (click)="updateChart(Period.MONTH6)">6 months</button>
+      <button mat-raised-button color="accent" (click)="updateChart(Period.YEAR)">1 year</button>
+    </div>
+  </div>
   <div class="row">
-    <a mat-raised-button color="primary" routerLink="/main">Back</a>
-    <div>Napis updated on: lololol</div>
+    <div class="col text-center">
+      <a mat-raised-button color="primary" routerLink="/main">Back</a>
+      <div>Updated on: {{dateOfUpdate}} via api.nbp.pl</div>
+    </div>
   </div>
 </div>

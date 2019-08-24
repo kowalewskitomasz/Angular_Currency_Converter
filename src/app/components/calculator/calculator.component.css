@@ -7,5 +7,9 @@
 }
 
 .graph-row {
-  height: 20%;
+  height: 30%;
+}
+
+.timespan-row {
+  height: 10%;
 }

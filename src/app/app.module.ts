@@ -9,6 +9,7 @@ import {RouterModule} from '@angular/router';
 import {RoutingModule} from './modules/routing.module';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
+import {ChartsModule} from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {FormsModule} from '@angular/forms';
     RouterModule,
     RouterModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
