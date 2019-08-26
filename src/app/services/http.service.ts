@@ -21,9 +21,6 @@ export class HttpService {
     const todayDate = new Date();
     const calculatedDate = new Date();
     calculatedDate.setDate(todayDate.getDate() - period);
-    console.log(todayDate);
-    console.log(calculatedDate);
-    console.log(calculatedDate.getDate());
 
     return this.http.get<ExchangeRateSeries>('http://api.nbp.pl/api/exchangerates/rates/A/' + currency + '/' +
       calculatedDate.toISOString().substring(0, 10) + '/' + todayDate.toISOString().substring(0, 10));

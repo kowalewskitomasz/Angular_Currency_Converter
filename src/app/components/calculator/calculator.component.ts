@@ -3,6 +3,7 @@ import {HttpService} from '../../services/http.service';
 import {Exchange} from '../../model/exchange.model';
 import {Rate} from '../../model/rate.model';
 import {ChartConfig} from '../../model/chartconfig.model';
+import {Rates} from '../../model/rates.model';
 
 export enum Period {
   WEEK = 7,
@@ -27,13 +28,14 @@ export class CalculatorComponent implements OnInit {
   Period = Period;
   dateOfUpdate: Date;
   chartConfig = new ChartConfig();
+  globalPeriod: Period;
 
   constructor(private http: HttpService) {
   }
 
   ngOnInit() {
     this.http.getCurrencies().subscribe(exchangeNBP => {
-      const plnCurrency = new Rate('polski złoty', 'PLN', 1);
+      const plnCurrency = new Rate('polski złoty', 'PLN', 1, null);
       this.exchangeTable = exchangeNBP[0];
       this.dateOfUpdate = this.exchangeTable.effectiveDate;
       this.exchangeTable.rates.unshift(plnCurrency);
@@ -41,6 +43,7 @@ export class CalculatorComponent implements OnInit {
       this.firstCurrency = this.rateTable[0];
       this.secondCurrency = this.rateTable[1];
       this.updateValuesLeft();
+      this.configureChart();
     });
   }
 
@@ -52,24 +55,55 @@ export class CalculatorComponent implements OnInit {
     this.valueFirstCurrency = ((+this.valueSecondCurrency * this.secondCurrency.mid.valueOf()) / this.firstCurrency.mid.valueOf());
   }
 
+  updateBothValuesAndChart() {
+    this.updateValuesLeft();
+    this.updateValuesRight();
+    this.configureChart();
+  }
+
   switchCurrencies() {
     const tempRateFirstCurrency = this.firstCurrency;
     this.firstCurrency = this.secondCurrency;
     this.secondCurrency = tempRateFirstCurrency;
     this.updateValuesLeft();
+    this.configureChart();
   }
 
-  updateChart(period: Period) {
-    if (this.firstCurrency.code !== 'PLN') {
-      this.http.getRatesForPeriod(period, this.firstCurrency.code).subscribe(rates1 => {
-        console.log(rates1);
-
-        if (this.secondCurrency.code !== 'PLN') {
-          this.http.getRatesForPeriod(period, this.secondCurrency.code).subscribe(rates2 => {
-            console.log(rates2);
-          });
-        }
-      });
+  configureChart(period?: Period) {
+    if (this.globalPeriod == null) {
+      this.globalPeriod = Period.MONTH3;
+    } else if (period != null) {
+      this.globalPeriod = period;
     }
+
+    if (this.firstCurrency.code === 'PLN' || this.secondCurrency.code === 'PLN') {
+      console.log('polish zloty ERROR!');
+      return;
+    }
+
+    this.http.getRatesForPeriod(this.globalPeriod, this.firstCurrency.code).subscribe(series1 => {
+      this.http.getRatesForPeriod(this.globalPeriod, this.secondCurrency.code).subscribe(series2 => {
+        const firstRateTable: Rates = series1.rates;
+        const secondRateTable: Rates = series2.rates;
+
+        const resultMidData: number[] = [];
+        const resultDateData: string[] = [];
+
+        for (let i = 0; i < Object.keys(firstRateTable).length; i++) {
+          resultMidData.push(firstRateTable[i].mid / secondRateTable[i].mid);
+          resultDateData.push(firstRateTable[i].effectiveDate);
+        }
+
+        this.chartConfig.lineChartData = [
+          {
+            data: resultMidData,
+            label: this.firstCurrency.code + ' to ' + this.secondCurrency.code,
+            yAxisID: 'y-axis-0'
+          }
+        ];
+
+        this.chartConfig.lineChartLabels = resultDateData;
+      });
+    });
   }
 }

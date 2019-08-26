@@ -1,8 +1,8 @@
 import {Rates} from './rates.model';
 
 export class ExchangeRateSeries {
-  table: String;
-  currency: String;
-  code: String;
+  table: string;
+  currency: string;
+  code: string;
   rates: Rates;
 }

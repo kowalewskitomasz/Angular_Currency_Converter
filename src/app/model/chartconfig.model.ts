@@ -2,12 +2,12 @@ import {ChartDataSets, ChartOptions} from 'chart.js';
 import {Label} from 'ng2-charts';
 
 export class ChartConfig {
-  private _lineChartData: ChartDataSets[] = [
-    {data: [10, 20, 40, 60, 120, 30, 60], label: 'Wartosci', yAxisID: 'y-axis-0'},
+  lineChartData: ChartDataSets[] = [
+    {data: [10, 20, 40, 60, 120, 30, 60], label: 'Wartości', yAxisID: 'y-axis-0'},
   ];
 
-  private _lineChartLabels: Label[] = ['dzien1', 'dzien2', 'dzien3', 'dzien4', 'dzien5', 'dzien6', 'dzien7'];
-  private _lineChartOptions: (ChartOptions & { annotation: any }) = {
+  lineChartLabels: Label[] = ['dzien1', 'dzien2', 'dzien3', 'dzien4', 'dzien5', 'dzien6', 'dzien7'];
+  lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
     maintainAspectRatio: false,
     scales: {
@@ -21,18 +21,5 @@ export class ChartConfig {
     },
     annotation: {},
   };
-
-
-  get getLineChartData(): Chart.ChartDataSets[] {
-    return this._lineChartData;
-  }
-
-  get getLineChartLabels(): Label[] {
-    return this._lineChartLabels;
-  }
-
-  get getLineChartOptions(): Chart.ChartOptions & { annotation: any } {
-    return this._lineChartOptions;
-  }
 }
 

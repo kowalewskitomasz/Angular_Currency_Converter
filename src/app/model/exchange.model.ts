@@ -1,8 +1,8 @@
 import {Rate} from './rate.model';
 
 export class Exchange {
-  table: String;
-  no: String;
+  table: string;
+  no: string;
   effectiveDate: Date;
   rates: Rate[];
 }
