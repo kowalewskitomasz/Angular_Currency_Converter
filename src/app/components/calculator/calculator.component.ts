@@ -76,34 +76,74 @@ export class CalculatorComponent implements OnInit {
       this.globalPeriod = period;
     }
 
-    if (this.firstCurrency.code === 'PLN' || this.secondCurrency.code === 'PLN') {
-      console.log('polish zloty ERROR!');
-      return;
+    const resultMidData: number[] = [];
+    const resultDateData: string[] = [];
+
+    if (this.firstCurrency.code !== 'PLN' && this.secondCurrency.code !== 'PLN') {
+      this.retrieveDataForNonPlnCurrencies(resultMidData, resultDateData);
+    } else if (this.firstCurrency.code !== 'PLN' && this.secondCurrency.code === 'PLN') {
+      this.retrieveDataWhenOneOfCurrenciesIsNotPln(resultMidData, resultDateData, this.firstCurrency);
+    } else if (this.firstCurrency.code === 'PLN' && this.secondCurrency.code !== 'PLN') {
+      this.retrieveDataWhenOneOfCurrenciesIsNotPln(resultMidData, resultDateData, this.secondCurrency);
+    } else if (this.firstCurrency.code === 'PLN' && this.secondCurrency.code === 'PLN') {
+      this.retrieveDataWhenBothCurrenciesArePln(resultMidData, resultDateData);
     }
 
+    this.updateDataInChart(resultMidData, resultDateData, this.firstCurrency.code, this.secondCurrency.code);
+  }
+
+  private retrieveDataWhenBothCurrenciesArePln(resultMidData: number[], resultDateData: string[]) {
+    this.http.getRatesForPeriod(this.globalPeriod, 'EUR').subscribe(series => {
+      const rateTable: Rates = series.rates;
+
+      for (let i = 0; i < Object.keys(rateTable).length; i++) {
+        resultMidData.push(1);
+        resultDateData.push(rateTable[i].effectiveDate);
+      }
+    });
+  }
+
+  private retrieveDataWhenOneOfCurrenciesIsNotPln(resultMidData: number[], resultDateData: string[], currency: Rate) {
+    this.http.getRatesForPeriod(this.globalPeriod, currency.code).subscribe(series => {
+      const rateTable: Rates = series.rates;
+
+      if (this.firstCurrency.code === 'PLN') {
+        for (let i = 0; i < Object.keys(rateTable).length; i++) {
+          resultMidData.push(1 / rateTable[i].mid);
+          resultDateData.push(rateTable[i].effectiveDate);
+        }
+      } else if (this.secondCurrency.code === 'PLN') {
+        for (let i = 0; i < Object.keys(rateTable).length; i++) {
+          resultMidData.push(rateTable[i].mid / 1);
+          resultDateData.push(rateTable[i].effectiveDate);
+        }
+      }
+    });
+  }
+
+  private retrieveDataForNonPlnCurrencies(resultMidData: number[], resultDateData: string[]) {
     this.http.getRatesForPeriod(this.globalPeriod, this.firstCurrency.code).subscribe(series1 => {
       this.http.getRatesForPeriod(this.globalPeriod, this.secondCurrency.code).subscribe(series2 => {
         const firstRateTable: Rates = series1.rates;
         const secondRateTable: Rates = series2.rates;
 
-        const resultMidData: number[] = [];
-        const resultDateData: string[] = [];
-
         for (let i = 0; i < Object.keys(firstRateTable).length; i++) {
           resultMidData.push(firstRateTable[i].mid / secondRateTable[i].mid);
           resultDateData.push(firstRateTable[i].effectiveDate);
         }
-
-        this.chartConfig.lineChartData = [
-          {
-            data: resultMidData,
-            label: this.firstCurrency.code + ' to ' + this.secondCurrency.code,
-            yAxisID: 'y-axis-0'
-          }
-        ];
-
-        this.chartConfig.lineChartLabels = resultDateData;
       });
     });
+  }
+
+  private updateDataInChart(resultMidData: number[], resultDateData: string[], firstCurrencyCode: string, secondCurrencyCode: string) {
+    this.chartConfig.lineChartData = [
+      {
+        data: resultMidData,
+        label: firstCurrencyCode + ' to ' + secondCurrencyCode,
+        yAxisID: 'y-axis-0'
+      }
+    ];
+
+    this.chartConfig.lineChartLabels = resultDateData;
   }
 }
