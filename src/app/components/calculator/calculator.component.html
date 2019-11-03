@@ -46,7 +46,8 @@
             [labels]="chartConfig.lineChartLabels"
             [options]="chartConfig.lineChartOptions"
             [legend]="true"
-            [chartType]="'line'">
+            [chartType]="'line'"
+            [colors]="chartConfig.lineChartColor">
     </canvas>
   </div>
   <div class="row timespan-row">
@@ -61,7 +62,13 @@
   <div class="row">
     <div class="col text-center">
       <a mat-raised-button color="primary" routerLink="/main">Back</a>
-      <div>Updated on: {{dateOfUpdate}} via api.nbp.pl</div>
     </div>
   </div>
+  <footer>
+    <div class="row page-footer">
+      <div class="col text-center align-items-baseline mat-body-1">
+        <div>Updated on: {{dateOfUpdate}} via api.nbp.pl</div>
+      </div>
+    </div>
+  </footer>
 </div>

@@ -3,10 +3,9 @@
 @include mat-core();
 
 $converter-primary: mat-palette($mat-indigo);
-$converter-accent: mat-palette($mat-pink, A200, A100, A400);
+$converter-accent: mat-palette($mat-red, A200, A100, A400);
 $converter-warn: mat-palette($mat-red);
-$converter-theme: mat-light-theme($converter-primary, $converter-accent, $converter-warn);
-@include angular-material-theme($converter-theme);
+$converter-theme: mat-dark-theme($converter-primary, $converter-accent, $converter-warn);
 
 $custom-typography: mat-typography-config(
   $font-family: 'Nunito',
@@ -14,5 +13,6 @@ $custom-typography: mat-typography-config(
   $body-1: mat-typography-level(16px, 24px, 500) //$button: mat-typography-level(24px, 24px, 300)
 );
 
+@include angular-material-theme($converter-theme);
 @include angular-material-typography($custom-typography);
 @include mat-core($custom-typography);

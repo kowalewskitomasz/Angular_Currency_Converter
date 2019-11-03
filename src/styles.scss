@@ -5,8 +5,85 @@
 
 html, body {
   height: 100%;
+
+  background: linear-gradient(270deg, #B7D3F2, #AFAFDC, #A5A1E2, #84AFE6, #79BEEE);
+  background-size: 1000% 1000%;
+
+  -webkit-animation: calculatorAnimation 30s ease infinite;
+  -moz-animation: calculatorAnimation 30s ease infinite;
+  animation: calculatorAnimation 30s ease infinite;
+
+  @-webkit-keyframes calculatorAnimation {
+    0% {
+      background-position: 0% 50%
+    }
+    50% {
+      background-position: 100% 50%
+    }
+    100% {
+      background-position: 0% 50%
+    }
+  }
+  @-moz-keyframes calculatorAnimation {
+    0% {
+      background-position: 0% 50%
+    }
+    50% {
+      background-position: 100% 50%
+    }
+    100% {
+      background-position: 0% 50%
+    }
+  }
+  @keyframes calculatorAnimation {
+    0% {
+      background-position: 0% 50%
+    }
+    50% {
+      background-position: 100% 50%
+    }
+    100% {
+      background-position: 0% 50%
+    }
+  }
+
 }
 
 .container-fluid {
   height: 100%;
+}
+
+.mat-headline {
+  color: white;
+}
+
+.mat-raised-button.mat-primary {
+  padding: 20px 30px 20px 30px;
+  font-size: 22px;
+}
+
+.mat-raised-button.mat-accent {
+  margin: 10px;
+}
+
+.mat-icon {
+  height: 48px !important;
+  width: 48px !important;
+  font-size: 48px !important;
+  line-height: 48px !important;
+  color: white;
+}
+
+button.mat-icon-button {
+  height: 50px !important;
+  width: 50px !important;
+}
+
+.page-footer {
+  left: 0;
+  bottom: 10px;
+  position: fixed;
+  width: 100%;
+  color: white;
+  text-align: center;
 }
